@@ -2,13 +2,23 @@ import fetch from 'node-fetch';
 import admin from 'firebase-admin'
 import { getDatabase, onValue, set, child, get, remove, update, query, orderByChild, equalTo } from "firebase-admin/database";
 
-var serviceAccount = require("./firebase-adminsdk.json");
 
 
 
 if (!admin.apps.length) {
     admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
+        credential: admin.credential.cert({
+            PROJECT_ID: process.env.PROJECT_ID,
+            PRIVATE_KEY_ID: process.env.PRIVATE_KEY_ID,
+            PRIVATE_KEY: process.env.PRIVATE_KEY,
+            CLIENT_EMAIL: process.env.CLIENT_EMAIL,
+            CLIENT_ID: process.env.CLIENT_ID,
+            AUTH_URI: process.env.AUTH_URI,
+            TOKEN_URI: process.env.TOKEN_URI,
+            AUTH_PROVIDER_X509_CERT_URL: process.env.AUTH_PROVIDER_X509_CERT_URL,
+            CLIENT_X509_CERT_URL: process.env.CLIENT_X509_CERT_URL,
+            UNIVERSE_DOMAIN: process.env.UNIVERSE_DOMAIN,
+        }),
         databaseURL: "https://bottak-15afa-default-rtdb.firebaseio.com"
     });
 }
@@ -84,13 +94,13 @@ export default async function account(req, res) {
             let promedio2 = (tempMaxima2 + tempMinima2) / 2;
 
             const ref = db.ref(`divisas/${data.fiat}`);
-            const cp = i['compra porcentaje'] ? promedio * ((i['compra porcentaje'] * 1)/100 ): 0
-            const vp = i['venta porcentaje'] ? promedio2 * ((i['venta porcentaje']*1)/100) : 0
+            const cp = i['compra porcentaje'] ? promedio * ((i['compra porcentaje'] * 1) / 100) : 0
+            const vp = i['venta porcentaje'] ? promedio2 * ((i['venta porcentaje'] * 1) / 100) : 0
 
-            await ref.update({ compra: (promedio + 0.01  - cp *1).toFixed(2), venta: (promedio2 + 0.01 + vp *1).toFixed(2), ...getDayMonthYear() })
+            await ref.update({ compra: (promedio + 0.01 - cp * 1).toFixed(2), venta: (promedio2 + 0.01 + vp * 1).toFixed(2), ...getDayMonthYear() })
 
             // console.log({ [data.fiat]: { compra: (promedio + 0.01).toFixed(2), venta: (promedio2 + 0.01).toFixed(2) } })
-            acc = { ...acc, [data.fiat]: { compra: (promedio + 0.01 - cp *1).toFixed(2), venta: (promedio2 + 0.01 + vp *1).toFixed(2) } }
+            acc = { ...acc, [data.fiat]: { compra: (promedio + 0.01 - cp * 1).toFixed(2), venta: (promedio2 + 0.01 + vp * 1).toFixed(2) } }
 
         }
 
