@@ -642,7 +642,7 @@ export default function Home() {
                 Code
               </th>
               <th scope="col" className=" px-3 py-3">
-                Tasa de <br /> cambio USDT
+                Tasa de <br /> cambio USD
               </th>
               <th scope="col" className="text-center px-3 py-3">
                 Compra
@@ -663,19 +663,19 @@ export default function Home() {
                 Volumen de exchange
               </th>
               <th scope="col" className="text-center px-3 py-3">
-                Aply Exchange USDT
+                Aply Exchange USD
               </th>
               <th scope="col" className="text-center px-3 py-3">
                 Tarifa de Envio<br />
-                1 - 1000 USDT
+                1 - 1000 USD
               </th>
               <th scope="col" className="text-center px-3 py-3">
                 Tarifa de Envio <br />
-                1 001 - 10 000 USDT
+                1 001 - 10 000 USD
               </th>
               <th scope="col" className="text-center px-3 py-3">
                 Tarifa de Envio<br />
-                10 001 - 100 000 USDT
+                10 001 - 100 000 USD
               </th>
               <th scope="col" className="text-center px-3 py-3">
                 Guardar

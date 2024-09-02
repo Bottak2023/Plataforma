@@ -27,7 +27,7 @@ export function UserProvider({ children }) {
 	const [modal, setModal] = useState('modal')
 	const [currency, setCurrency] = useState("BOB");
 	const [select, setSelect] = useState('BOB')
-	const [select2, setSelect2] = useState('USD')
+	const [select2, setSelect2] = useState('USDT')
 	const [select3, setSelect3] = useState('USA')
 	const [countries, setCountries] = useState("BOL");
 

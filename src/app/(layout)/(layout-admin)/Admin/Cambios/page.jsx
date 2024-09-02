@@ -178,7 +178,7 @@ function closeProfileIMG() {
                     {i['importe']}
                   </td>
                   <td className=" p-3">
-                    {i['divisa de cambio'] === 'USD' ? 'USDT' : i['divisa de cambio']}
+                    {i['divisa de cambio']}
                   </td>
                   <td className="min-w-32 p-3">
                     {i['cambio']}

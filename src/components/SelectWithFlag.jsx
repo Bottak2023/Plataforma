@@ -29,10 +29,10 @@ export default function App({ placeholder, value, onChange, propHandlerSelect, p
   const handlerOnChange = (e) => {
     onChange == 'Transference' && setTransferencia((e.target.value * 1).toFixed(2));
 
-    (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USD'].compra / divisas[select].venta).toFixed(2)) <= 1000 && setComision((divisas[select]['tarifa 1'] * e.target.value / 100).toFixed(2));
-    (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USD'].compra / divisas[select].venta).toFixed(2)) <= 10000 && (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USD'].compra / divisas[select].venta).toFixed(2)) > 1000 && setComision((divisas[select]['tarifa 2'] * e.target.value / 100).toFixed(2));
-    (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USD'].compra / divisas[select].venta).toFixed(2)) <= 100000 && (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USD'].compra / divisas[select].venta).toFixed(2)) > 10000 && setComision((divisas[select]['tarifa 3'] * e.target.value / 100).toFixed(2));
-    (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USD'].compra / divisas[select].venta).toFixed(2)) > 100000 && setComision('CONTACTESE CON SOPORTE');
+    (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) <= 1000 && setComision((divisas[select]['tarifa 1'] * e.target.value / 100).toFixed(2));
+    (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) <= 10000 && (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) > 1000 && setComision((divisas[select]['tarifa 2'] * e.target.value / 100).toFixed(2));
+    (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) <= 100000 && (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) > 10000 && setComision((divisas[select]['tarifa 3'] * e.target.value / 100).toFixed(2));
+    (divisas && divisas[select] && divisas[select2] && (e.target.value * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) > 100000 && setComision('CONTACTESE CON SOPORTE');
 
   }
   console.log(comision)
@@ -63,7 +63,7 @@ export default function App({ placeholder, value, onChange, propHandlerSelect, p
           defaultValue={defaultValue}
           required />
 {console.log()}
-        <span className=" w-[15%] text-gray-100 p-3 " onClick={(e) => handlerIsSelect(e)}>{propSelect === 'USD'? 'USDT' :propSelect}</span>
+        <span className=" w-[15%] text-gray-100 p-3 " onClick={(e) => handlerIsSelect(e)}>{propSelect}</span>
         <span className='w-[auto] flex items-center rounded-[20px] '><img src={divisas && divisas[propSelect] && divisas[propSelect].flagPNG} className="w-[50px] h-[30px]" alt="" /></span>
         {/* <span className='w-[auto] flex items.center rounded-[20px] '><CurrencyFlag currency={propSelect} size="xl" /></span> */}
         <span className={propIsSelect ? 'text-white text-center w-[10%] right-5 rotate-[270deg] p-3 ' : 'text-white text-center w-[10%] right-5 rotate-90 p-3 '} onClick={(e) => handlerIsSelect(e)}>{'>'}</span>
@@ -75,7 +75,7 @@ export default function App({ placeholder, value, onChange, propHandlerSelect, p
             <li className='w-full  h-[50px] flex justify-start items-center px-10' key={index} onClick={(e) => handlerUserSelect(e, i)}>
               {/* <span className="inline-block w-[30px]"><CurrencyFlag currency={i.code} size="lg" /></span> */}
               <span className="inline-block  h-[20px] "><img src={i.flagPNG} className="inline-block w-[30px] h-[20px]" alt="" /></span>
-              <span className="pl-5 "> {i.code === 'USD' ? 'USDT': i.code}, {i.currency}</span>
+              <span className="pl-5 "> {i.code}, {i.currency}</span>
             </li>)}
         </ul>
       </div>
