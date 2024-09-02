@@ -4,25 +4,39 @@ import { getDatabase, onValue, set, child, get, remove, update, query, orderByCh
 
 
 const credentialFB = {
-    "type": process.env.TYPE,
-    "project_id": process.env.PROJECT_ID,
-    "private_key_id": process.env.PRIVATE_KEY_ID,
-    "private_key": process.env.PRIVATE_KEY,
-    "client_email": process.env.CLIENT_EMAIL,
-    "client_id": process.env.CLIENT_ID,
-    "auth_uri": process.env.AUTH_URI,
-    "token_uri": process.env.TOKEN_URI,
-    "auth_provider_x509_cert_url": process.env.AUTH_PROVIDER_X509_CERT_URL,
-    "client_x509_cert_url": process.env.CLIENT_X509_CERT_URL,
-    "universe_domain": process.env.UNIVERSE_DOMAIN
+    type: process.env.TYPE,
+    projectId: process.env.PROJECT_ID,
+    privateKeyId: process.env.PRIVATE_KEY_ID,
+    privateKey: process.env.PRIVATE_KEY,
+    clientEmail: process.env.CLIENT_EMAIL,
+    clientId: process.env.CLIENT_ID,
+    authUri: process.env.AUTH_URI,
+    tokenUri: process.env.TOKEN_URI,
+    authProviderX509CertUrl: process.env.AUTH_PROVIDER_X509_CERT_URL,
+    clientX509CertUrl: process.env.CLIENT_X509_CERT_URL,
+    universeDomain: process.env.UNIVERSE_DOMAIN
+    // "type": process.env.TYPE,
+    // "project_id": process.env.PROJECT_ID,
+    // "private_key_id": process.env.PRIVATE_KEY_ID,
+    // "private_key": process.env.PRIVATE_KEY,
+    // "client_email": process.env.CLIENT_EMAIL,
+    // "client_id": process.env.CLIENT_ID,
+    // "auth_uri": process.env.AUTH_URI,
+    // "token_uri": process.env.TOKEN_URI,
+    // "auth_provider_x509_cert_url": process.env.AUTH_PROVIDER_X509_CERT_URL,
+    // "client_x509_cert_url": process.env.CLIENT_X509_CERT_URL,
+    // "universe_domain": process.env.UNIVERSE_DOMAIN
 }
 
+  
 const credentialJSON = JSON.stringify(credentialFB)
 console.log(typeof credentialJSON)
 
+console.log( credentialJSON)
+
 if (!admin.apps.length) {
     admin.initializeApp({
-        credential: admin.credential.cert(credentialJSON),
+        credential: admin.credential.cert(credentialFB),
         databaseURL: "https://bottak-15afa-default-rtdb.firebaseio.com"
     });
 }
