@@ -29,14 +29,14 @@ const credentialFB = {
 }
 
   
-const credentialJSON = JSON.stringify(credentialFB)
-console.log(typeof credentialJSON)
+// const credentialJSON = JSON.stringify(credentialFB)
+console.log(typeof credentialFB)
 
-console.log( credentialJSON)
+console.log( credentialFB)
 
 if (!admin.apps.length) {
     admin.initializeApp({
-        credential: admin.credential.cert(credentialJSON),
+        credential: admin.credential.cert(credentialFB),
         databaseURL: "https://bottak-15afa-default-rtdb.firebaseio.com"
     });
 }
