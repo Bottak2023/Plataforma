@@ -17,9 +17,12 @@ const credentialFB = {
     "universe_domain": process.env.UNIVERSE_DOMAIN
 }
 
+const credentialJSON = JSON.stringify(credentialFB)
+console.log(typeof credentialJSON)
+
 if (!admin.apps.length) {
     admin.initializeApp({
-        credential: admin.credential.cert(credentialFB),
+        credential: admin.credential.cert(credentialJSON),
         databaseURL: "https://bottak-15afa-default-rtdb.firebaseio.com"
     });
 }
