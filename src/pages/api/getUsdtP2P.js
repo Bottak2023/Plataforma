@@ -7,7 +7,7 @@ import { getDatabase, onValue, set, child, get, remove, update, query, orderByCh
 
 if (!admin.apps.length) {
     admin.initializeApp({
-        credential: admin.credential.cert({
+        credential: admin.credential.cert(JSON.stringify({
             PROJECT_ID: process.env.PROJECT_ID,
             PRIVATE_KEY_ID: process.env.PRIVATE_KEY_ID,
             PRIVATE_KEY: process.env.PRIVATE_KEY,
@@ -18,7 +18,7 @@ if (!admin.apps.length) {
             AUTH_PROVIDER_X509_CERT_URL: process.env.AUTH_PROVIDER_X509_CERT_URL,
             CLIENT_X509_CERT_URL: process.env.CLIENT_X509_CERT_URL,
             UNIVERSE_DOMAIN: process.env.UNIVERSE_DOMAIN,
-        }),
+        })),
         databaseURL: "https://bottak-15afa-default-rtdb.firebaseio.com"
     });
 }
