@@ -6,7 +6,7 @@ export default function handler(req, res) {
         service: "Gmail",
         auth: {
             user: "info.bottak@gmail.com",
-            pass: "nfhj cmeo eedt psab",
+            pass: "jfqt lhab kpwz lmza",
         },
     });
 

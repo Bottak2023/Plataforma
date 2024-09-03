@@ -85,58 +85,6 @@ function Home() {
 
             try {
                 setModal(`Enviando los resultados de la VERIFICACION RAPIDA a \n ${user.email}`)
-
-                // const googleSheet = await fetch('/api/postGoogleSheet', {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify({
-                //         "op": "listar",
-                //         "remitente": object['remitente'],
-                //         "importe": object['importe'],
-                //         "user uuid": object['user uuid'],
-                //         "uuid": object.uuid,
-                //         "operacion": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
-                //     }),
-                // })
-                // setModal(`Finalizando...`)
-                // const data = await googleSheet.json()
-
-                const botChat = ` 
-                ---DATOS REGISTRO DE REMITENTE---\n
-                  Remitente: ${object['remitente']},\n
-                  Dni remitente: ${db['dni remitente']},\n
-                  Pais remitente: ${db['pais remitente']},\n
-                  Banco remitente: ${db['banco remitente']},\n
-                  Divisa de envio: ${db['divisa de envio']},\n
-                
-                -------DATOS DESTINATARIO-------\n
-                  Destinatario: ${db['destinatario']},\n
-                  DNI destinatario: ${db['dni']},\n
-                  Pais destinatario: ${db['pais']},\n
-                  Direccion: ${db['direccion']},\n
-                  Celular: ${db['celular']},\n
-                  Cuenta destinatario: ${db['cuenta destinatario']},\n
-                  Nombre de banco: ${db['nombre de banco']},\n
-                  Divisa de receptor: ${db['divisa de receptor']},\n
-                
-                  ---DATOS DE TRANSACCION GENERALES---\n
-                  Operacion: ${object['operacion']},\n
-                  Importe: ${object['importe']},\n
-                  Comision: ${db['comision']},\n
-                  Cambio: ${db['cambio']},\n
-                  fecha: ${object['fecha']},\n
-                
-                  ---DATOS DE TRANSACCION REMITENTE---\n
-                  Pais cuenta bancaria: ${db['pais cuenta bancaria']},\n
-                  Nombre de banco: ${db['nombre de banco']},\n
-                  Cuenta bancaria: ${db['cuenta bancaria']},\n
-                
-                  ---DATOS DE TRANSACCION BOTTAK---\n
-                  banco de transferencia: ${db['banco de transferencia']},\n 
-                  `
-
                 await fetch(`/api/sendEmail`, {
                     method: 'POST',
                     headers: {
@@ -144,14 +92,78 @@ function Home() {
                     },
                     body: JSON.stringify({ data: botChat, estado: db.estado, email: user.email })
                 })
-
-                await fetch(`/api/bot`, {
+                fetch('/api/postGoogleSheet', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ data: botChat, url: object.url }),
+                    // body: JSON.stringify({
+                    //     "op": "listar",
+                    //     "remitente": object['remitente'],
+                    //     "importe": object['importe'],
+                    //     "user uuid": object['user uuid'],
+                    //     "uuid": object.uuid,
+                    //     "operacion": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
+                    // }),
+                    body: JSON.stringify({
+                        ...db, ...object,
+                        "op": "listar",
+                        "operacionURL": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
+                    }),
                 })
+                console.log({
+                    ...db, ...object,
+                    "op": "listar",
+                    "operacionURL": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
+                })
+                setModal(`Finalizando...`)
+
+                // const data = await googleSheet.json()
+                // const data = null
+                // const botChat = ` 
+                // ---DATOS REGISTRO DE REMITENTE---\n
+                //   Remitente: ${object['remitente']},\n
+                //   Dni remitente: ${db['dni remitente']},\n
+                //   Pais remitente: ${db['pais remitente']},\n
+                //   Banco remitente: ${db['banco remitente']},\n
+                //   Divisa de envio: ${db['divisa de envio']},\n
+
+                // -------DATOS DESTINATARIO-------\n
+                //   Destinatario: ${db['destinatario']},\n
+                //   DNI destinatario: ${db['dni']},\n
+                //   Pais destinatario: ${db['pais']},\n
+                //   Direccion: ${db['direccion']},\n
+                //   Celular: ${db['celular']},\n
+                //   Cuenta destinatario: ${db['cuenta destinatario']},\n
+                //   Nombre de banco: ${db['nombre de banco']},\n
+                //   Divisa de receptor: ${db['divisa de receptor']},\n
+
+                //   ---DATOS DE TRANSACCION GENERALES---\n
+                //   Operacion: ${object['operacion']},\n
+                //   Importe: ${object['importe']},\n
+                //   Comision: ${db['comision']},\n
+                //   Cambio: ${db['cambio']},\n
+                //   Estado: ${data?.message && data?.message !== undefined && data.message === 'Verificado con Exito' ? 'Verificado' : 'En verificación'},\n
+                //   fecha: ${object['fecha']},\n
+
+                //   ---DATOS DE TRANSACCION REMITENTE---\n
+                //   Pais cuenta bancaria: ${db['pais cuenta bancaria']},\n
+                //   Nombre de banco: ${db['nombre de banco']},\n
+                //   Cuenta bancaria: ${db['cuenta bancaria']},\n
+
+                //   ---DATOS DE TRANSACCION BOTTAK---\n
+                //   banco de transferencia: ${db['banco de transferencia']},\n 
+                //   `
+
+
+
+                // await fetch(`/api/bot`, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({ data: botChat, url: object.url }),
+                // })
 
                 router.replace(`/Exitoso?uuid=${uuid}&operacion=${object['operacion'] === 'Cambio' ? 'cambios' : 'envios'}`)
                 setModal('')
@@ -167,7 +179,7 @@ function Home() {
                 "user uuid": object['user uuid'],
                 "uuid": object.uuid,
                 "operacion": object['operacion'],
-                "fecha":object.fecha
+                "fecha": object.fecha
             }
             destinatario.operacion === 'Cambio'
                 ? uploadStorage(`cambios/${uuid}`, postImage, obj, callback2)
