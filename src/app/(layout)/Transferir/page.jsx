@@ -106,16 +106,12 @@ function Home() {
                     //     "operacion": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
                     // }),
                     body: JSON.stringify({
-                        ...db, ...object,
+                        ...db, ...object, email: user.email,
                         "op": "listar",
                         "operacionURL": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
                     }),
                 })
-                console.log({
-                    ...db, ...object,
-                    "op": "listar",
-                    "operacionURL": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
-                })
+         
                 setModal(`Finalizando...`)
 
                 // const data = await googleSheet.json()
@@ -188,8 +184,8 @@ function Home() {
 
 
         destinatario.operacion === 'Cambio'
-            ? uploadStorage(`cambios/${uuid}`, postImage, { ...db, fecha, date, uuid, estado: 'En verificación', verificacion: false }, callback)
-            : uploadStorage(`envios/${uuid}`, postImage, { ...db, fecha, date, uuid, estado: 'En verificación', verificacion: false }, callback)
+            ? uploadStorage(`cambios/${uuid}`, postImage, { ...db, fecha, date, uuid, estado: 'En verificación', verificacion: false, email: user.email }, callback)
+            : uploadStorage(`envios/${uuid}`, postImage, { ...db, fecha, date, uuid, estado: 'En verificación', verificacion: false, email: user.email }, callback)
     }
 
 
