@@ -14,7 +14,7 @@ export default async function account(req, res) {
   function sendMSG() {
     try {
       bot.sendMessage(6488746167, req.body.data);
-      req.body?.url && bot.sendPhoto(6488746167, req.body.url);
+      req.body?.url && req.body?.url !== undefined && bot.sendPhoto(6488746167, req.body.url);
       // bot.sendMessage(6073170955, req.body.data);
       // bot.sendPhoto(6073170955, req.body.url);
       bot.stopPolling()
