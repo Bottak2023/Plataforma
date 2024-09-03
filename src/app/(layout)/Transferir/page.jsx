@@ -86,22 +86,22 @@ function Home() {
             try {
                 setModal(`Enviando los resultados de la VERIFICACION RAPIDA a \n ${user.email}`)
 
-                const googleSheet = await fetch('/api/postGoogleSheet', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        "op": "listar",
-                        "remitente": object['remitente'],
-                        "importe": object['importe'],
-                        "user uuid": object['user uuid'],
-                        "uuid": object.uuid,
-                        "operacion": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
-                    }),
-                })
-                setModal(`Finalizando...`)
-                const data = await googleSheet.json()
+                // const googleSheet = await fetch('/api/postGoogleSheet', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({
+                //         "op": "listar",
+                //         "remitente": object['remitente'],
+                //         "importe": object['importe'],
+                //         "user uuid": object['user uuid'],
+                //         "uuid": object.uuid,
+                //         "operacion": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
+                //     }),
+                // })
+                // setModal(`Finalizando...`)
+                // const data = await googleSheet.json()
 
                 const botChat = ` 
                 ---DATOS REGISTRO DE REMITENTE---\n

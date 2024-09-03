@@ -17,6 +17,7 @@ export default async function handler(req, res) {
 
       // Verifica si la respuesta es exitosa
       if (!response.ok) {
+        
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
