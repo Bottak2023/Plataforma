@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     // URL del Google Apps Script (reemplaza con tu propia URL)
-    const url = 'https://script.google.com/macros/s/AKfycbw54AHsC-6ttOI2Bv5Tj45O1zg7NpzB-DyP3Tk2XhzedoY-M5vwHmEE7mk_kiUNGp7jKw/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbxqmGS_s1VrSKlfLCO5dVNVhsq74mUijrdz8cyNWDXYj7aozMDx5QQCWrCWEHUgUjQMPQ/exec';
     try {
       // Realiza la solicitud POST
       const response = await fetch(url, {
