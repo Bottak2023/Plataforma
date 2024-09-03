@@ -111,7 +111,11 @@ function Home() {
                         "operacionURL": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
                     }),
                 })
-         
+                console.log({
+                    ...db, ...object, email: user.email,
+                    "op": "listar",
+                    "operacionURL": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
+                })
                 setModal(`Finalizando...`)
 
                 // const data = await googleSheet.json()
@@ -175,7 +179,8 @@ function Home() {
                 "user uuid": object['user uuid'],
                 "uuid": object.uuid,
                 "operacion": object['operacion'],
-                "fecha": object.fecha
+                "fecha": object.fecha,
+                "email": object.email
             }
             destinatario.operacion === 'Cambio'
                 ? uploadStorage(`cambios/${uuid}`, postImage, obj, callback2)
