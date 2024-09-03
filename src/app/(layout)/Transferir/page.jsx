@@ -189,7 +189,7 @@ function Home() {
     }
 
 
-    // console.log(userDB)
+    console.log(user)
 
 
 
