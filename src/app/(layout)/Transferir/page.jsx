@@ -126,7 +126,6 @@ function Home() {
                   Importe: ${object['importe']},\n
                   Comision: ${db['comision']},\n
                   Cambio: ${db['cambio']},\n
-                  Estado: ${data?.message && data?.message !== undefined && data.message === 'Verificado con Exito' ? 'Verificado' : 'En verificación'},\n
                   fecha: ${object['fecha']},\n
                 
                   ---DATOS DE TRANSACCION REMITENTE---\n
