@@ -85,7 +85,7 @@ export default function Home() {
                 <h3 className='font-medium text-[14px]'>Destinatarios</h3>
                 <br />
                 <div className="w-[405px] grid grid-cols-2 gap-[5px]" >
-                    <input type="text" className='border-b-[1px] text-[14px] outline-none w-[200px]' onChange={onChangeFilter} placeholder='Buscar Destinatario' />
+                    <input type="text" className='border-b-[1px] text-[14px] text-black outline-none w-[200px]' onChange={onChangeFilter} placeholder='Buscar Destinatario' />
                     <button className='w-[200px] flex justify-center items-center h-[40px] text-white text-[14px] font-medium bg-[#32CD32] border border-gray-200 rounded-[10px] px-5 cursor-pointer' onClick={redirect}>Nuevo destinatario</button>
                 </div>
                 <br />

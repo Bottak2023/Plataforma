@@ -45,10 +45,7 @@ export default function App({ placeholder, value, onChange, propHandlerSelect, p
   // console.log(select)
   // console.log(propSelect)
 
-  console.log(value && divisas && divisas[select] && divisas[select2] && (transferencia * divisas[select2].compra / divisas[select].venta).toFixed(2))
   // console.log(divisas[select2].cambio)
-  console.log(divisas)
-  console.log(divisas[select].venta)
 
   return (
     <div className={`relative w-[100%] sm:max-w-[380px] bg-transparent border border-gray-300 text-gray-900 text-[14px] rounded-xl focus:ring-blue-500 focus:border-blue-500 block  p-0 `} >
@@ -62,7 +59,6 @@ export default function App({ placeholder, value, onChange, propHandlerSelect, p
           value={value && divisas && divisas[select] && divisas[select2] && (transferencia * divisas[select2].compra / divisas[select].venta).toFixed(2)}
           defaultValue={defaultValue}
           required />
-{console.log()}
         <span className=" w-[15%] text-gray-100 p-3 " onClick={(e) => handlerIsSelect(e)}>{propSelect}</span>
         <span className='w-[auto] flex items-center rounded-[20px] '><img src={divisas && divisas[propSelect] && divisas[propSelect].flagPNG} className="w-[50px] h-[30px]" alt="" /></span>
         {/* <span className='w-[auto] flex items.center rounded-[20px] '><CurrencyFlag currency={propSelect} size="xl" /></span> */}

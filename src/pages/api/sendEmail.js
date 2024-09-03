@@ -11,16 +11,7 @@ export default function handler(req, res) {
     });
 
     async function handlerSendEmail() {
-
-
-
-
-
-
         try {
-
-
-
             await transporter.sendMail({
                 from: 'info.bottak@gmail.com',
                 to: req.body.email,
@@ -36,16 +27,11 @@ export default function handler(req, res) {
                 //     }
                 // ]
             });
-            res.json({ success: 'true' })
-
-
+            return res.json({ msg: 'Send Email SuccessFull' })
         } catch (err) {
-            res.json({ success: 'error' })
-
-console.log(err)
+            console.log(err)
+            return res.json({ msg: `error ${err}` })
         }
-
-
     }
 
     handlerSendEmail()

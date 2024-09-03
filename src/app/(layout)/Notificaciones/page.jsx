@@ -47,7 +47,7 @@ export default function Home() {
                 </div> */}
                 <div className={'bg-white top-[70px] w-full  p-5 z-40 sm-right-[10px]'}>
                     {((enviosDB && enviosDB !== undefined) || (cambiosDB && cambiosDB !== undefined)) ? <ul> {Object.values(enviosDB && enviosDB !== undefined && cambiosDB && cambiosDB !== undefined ? { ...enviosDB, ...cambiosDB } : (enviosDB && enviosDB !== undefined ? enviosDB : (cambiosDB && cambiosDB !== undefined ? cambiosDB : {}))).sort((a, b) => b.date - a.date).map((i, index) => {
-                        return <li className='relative pb-8 border-b-[1px] border-gray-300' >
+                        return <li className='relative pb-8 border-b-[1px] text-black border-gray-300' >
                             <span className='w-full pr-[10px]'>Tu {i.operacion} de dinero de
                                 <b> {i['divisa de envio']} {i.importe}</b>  {i.destinatario !== undefined ? `a ${i.destinatario}, ` : ''}
                                 {i.estado == 'En verificación' && <span className={` text-black`}>esta en verificación.</span>}

@@ -93,7 +93,7 @@ function Logout() {
 
 }
 export default function Navbar({ children }) {
-    const { user, userDB, setUserProfile, nav, setNav, userNav, navItem, setNavItem, setUserNav, state, setState, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, divisas, setDivisas, setCountries, enviosDB, cambiosDB, notificaciones, setNotificaciones, setEnviosDB, setCambiosDB } = useUser()
+    const { user, userDB, setUserProfile, nav, setNav, userNav, navItem, setNavItem, setUserNav, state, setState, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, divisas, setDivisas, setCountries, enviosDB, cambiosDB, notificaciones, setNotificaciones, setEnviosDB, setCambiosDB, modal } = useUser()
     const pathname = usePathname()
 
     const router = useRouter()
@@ -136,7 +136,7 @@ export default function Navbar({ children }) {
     // pathname !== '/' && pathname !== '/Admin' || pathname !== '/Cambios'
 
     return (
-        <>
+       modal === ''&& <>
             <nav className="w-screen fixed top-0 z-40 " onClick={mainHandler}>
                 <div className="absolute top-0 w-screen  h-[70px]" style={{
                     backgroundImage: 'url(/background.png)',

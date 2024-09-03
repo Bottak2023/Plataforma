@@ -125,9 +125,7 @@ function listenToSpecificDataEq(route, children, eq, setUserData, callback) {
   const unsubscribe = onValue(dataQuery, (snapshot) => {
     if (snapshot.exists()) {
       // Convertir el snapshot a un objeto de JavaScript
-      let snap = snapshot.val();
-      console.log(snap);
-      
+      let snap = snapshot.val();      
       // Actualizar los datos del usuario con los datos recuperados
       setUserData(snap);
       
@@ -137,7 +135,7 @@ function listenToSpecificDataEq(route, children, eq, setUserData, callback) {
       }
     } else {
       // Si no existen datos, puedes manejar esto si es necesario
-      console.log('No se encontraron datos');
+      // console.log('No se encontraron datos');
     }
   }, (error) => {
     // Manejar errores si la escucha falla
@@ -150,6 +148,7 @@ function listenToSpecificDataEq(route, children, eq, setUserData, callback) {
 
 function writeUserData(rute, object, setUserSuccess, callback) {
   console.log(rute)
+  // console.log(object)
   update(ref(db, rute), object)
     .then(() => {
       console.log('Success')

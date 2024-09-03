@@ -176,7 +176,7 @@ export default function Home() {
               <th scope="col" className=" px-3 py-3">
                 #
               </th>
-              <th scope="col" className=" px-3 py-3">
+              <th scope="col" className=" px-3 py-3 w-[100px]">
                 Pais
               </th>
               <th scope="col" className=" px-3 py-3">
@@ -192,8 +192,11 @@ export default function Home() {
               <th scope="col" className="text-center px-3 py-3">
                 QR de cobro
               </th> */}
-              <th scope="col" className="text-center px-3 py-3">
+                 <th scope="col" className="text-center px-3 py-3">
                 Bancos admitidos
+              </th>
+              <th scope="col" className="text-center px-3 py-3">
+               Agregar banco
               </th>
               <th scope="col" className="text-center px-3 py-3">
                 Recepción
@@ -241,9 +244,10 @@ export default function Home() {
                       <path fill="#f44336" d="M44,24c0,11-9,20-20,20S4,35,4,24S13,4,24,4S44,13,44,24z"></path><line x1="16.9" x2="31.1" y1="16.9" y2="31.1" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="4"></line><line x1="31.1" x2="16.9" y1="16.9" y2="31.1" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="4"></line>
                     </svg>
                   </div>)}
-                  <div className='relative left-0 right-0 mx-auto w-[200px] pt-5'>
+                </td>
+                <td className="px-3 py-4">
                     <Button theme={"Success"} click={() => handlerAddBank(i)}>Agregar Banco</Button>
-                  </div>
+
                 </td>
                 <td className="px-3 py-4">
                   {i.recepcion !== undefined && i.recepcion !== false

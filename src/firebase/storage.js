@@ -7,6 +7,8 @@ import imageCompression from 'browser-image-compression';
 const storage = getStorage(app)
 
 //--------------------------- Firebase Storage ---------------------------
+// FUNCION PARA ESCRIBIR Y CAPTURAR URL DE FIREBASE
+
 async function uploadStorage(ruteDB, file, db, callback, name) {
 
     const imagesRef = ref(storage, `${ruteDB}${name ? name : ''}`);
@@ -33,6 +35,12 @@ async function uploadStorage(ruteDB, file, db, callback, name) {
             });
     });
 }
+
+
+
+
+
+// FUNCION PARA DESCARGAR DE FIREBASE
 
 function downloadFile(path) {
 console.log('getIMG')

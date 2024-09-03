@@ -60,16 +60,16 @@ function Home() {
 
 
 
-    function save(e, verif) {
+    function save(e) {
         e.preventDefault()
 
-        setModal('Verificando...')
+        setModal('Iniciando verificación rapida...')
 
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            // console.log(reader.result);
-        }
-        reader.readAsDataURL(postImage);
+        // const reader = new FileReader();
+        // reader.onloadend = () => {
+        //     // console.log(reader.result);
+        // }
+        // reader.readAsDataURL(postImage);
 
         const uuid = generateUUID()
         const date = new Date().getTime()
@@ -79,54 +79,14 @@ function Home() {
             email: user.email,
         }
 
-
-
-        const callback = async (object) => {
-
-
+        const callback2 = async (object) => {
             getSpecificDataEq(`/envios/`, 'user uuid', user.uid, setEnviosDB)
             getSpecificDataEq(`/cambios/`, 'user uuid', user.uid, setCambiosDB)
 
-            const botChat = ` 
-            ---DATOS REGISTRO DE REMITENTE---\n
-              Remitente: ${object['remitente']},\n
-              Dni remitente: ${object['dni remitente']},\n
-              Pais remitente: ${object['pais remitente']},\n
-              Banco remitente: ${object['banco remitente']},\n
-              Divisa de envio: ${object['divisa de envio']},\n
-            
-            -------DATOS DESTINATARIO-------\n
-              Destinatario: ${object['destinatario']},\n
-              DNI destinatario: ${object['dni']},\n
-              Pais destinatario: ${object['pais']},\n
-              Direccion: ${object['direccion']},\n
-              Celular: ${object['celular']},\n
-              Cuenta destinatario: ${object['cuenta destinatario']},\n
-              Nombre de banco: ${object['nombre de banco']},\n
-              Divisa de receptor: ${object['divisa de receptor']},\n
-            
-              ---DATOS DE TRANSACCION GENERALES---\n
-              Operacion: ${object['operacion']},\n
-              Importe: ${object['importe']},\n
-              Comision: ${object['comision']},\n
-              Cambio: ${object['cambio']},\n
-              Estado: ${object['estado']},\n
-              fecha: ${object['fecha']},\n
-            
-              ---DATOS DE TRANSACCION REMITENTE---\n
-              Pais cuenta bancaria: ${object['pais cuenta bancaria']},\n
-              Nombre de banco: ${object['nombre de banco']},\n
-              Cuenta bancaria: ${object['cuenta bancaria']},\n
-            
-              ---DATOS DE TRANSACCION BOTTAK---\n
-              banco de transferencia: ${object['banco de transferencia']},\n 
-              `
-
-
-
-
             try {
-                const response = await fetch('/api/postGoogleSheet', {
+                setModal(`Enviando los resultados de la VERIFICACION RAPIDA a \n ${user.email}`)
+
+                const googleSheet = await fetch('/api/postGoogleSheet', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -137,21 +97,46 @@ function Home() {
                         "importe": object['importe'],
                         "user uuid": object['user uuid'],
                         "uuid": object.uuid,
-                        "operacion": object['operacion']=== 'Envio'? 'envios':'cambios'
+                        "operacion": object['operacion'] === 'Envio' ? 'envios' : 'cambios'
                     }),
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
-                const result = await response.json();
-
-
-                result.content.filter((i) => {
-                    return
                 })
+                setModal(`Finalizando...`)
+                const data = await googleSheet.json()
 
+                const botChat = ` 
+                ---DATOS REGISTRO DE REMITENTE---\n
+                  Remitente: ${object['remitente']},\n
+                  Dni remitente: ${db['dni remitente']},\n
+                  Pais remitente: ${db['pais remitente']},\n
+                  Banco remitente: ${db['banco remitente']},\n
+                  Divisa de envio: ${db['divisa de envio']},\n
+                
+                -------DATOS DESTINATARIO-------\n
+                  Destinatario: ${db['destinatario']},\n
+                  DNI destinatario: ${db['dni']},\n
+                  Pais destinatario: ${db['pais']},\n
+                  Direccion: ${db['direccion']},\n
+                  Celular: ${db['celular']},\n
+                  Cuenta destinatario: ${db['cuenta destinatario']},\n
+                  Nombre de banco: ${db['nombre de banco']},\n
+                  Divisa de receptor: ${db['divisa de receptor']},\n
+                
+                  ---DATOS DE TRANSACCION GENERALES---\n
+                  Operacion: ${object['operacion']},\n
+                  Importe: ${object['importe']},\n
+                  Comision: ${db['comision']},\n
+                  Cambio: ${db['cambio']},\n
+                  Estado: ${data?.message && data?.message !== undefined && data.message === 'Verificado con Exito' ? 'Verificado' : 'En verificación'},\n
+                  fecha: ${object['fecha']},\n
+                
+                  ---DATOS DE TRANSACCION REMITENTE---\n
+                  Pais cuenta bancaria: ${db['pais cuenta bancaria']},\n
+                  Nombre de banco: ${db['nombre de banco']},\n
+                  Cuenta bancaria: ${db['cuenta bancaria']},\n
+                
+                  ---DATOS DE TRANSACCION BOTTAK---\n
+                  banco de transferencia: ${db['banco de transferencia']},\n 
+                  `
 
                 await fetch(`/api/sendEmail`, {
                     method: 'POST',
@@ -168,43 +153,36 @@ function Home() {
                     },
                     body: JSON.stringify({ data: botChat, url: object.url }),
                 })
+
+                router.replace(`/Exitoso?uuid=${uuid}&operacion=${object['operacion'] === 'Cambio' ? 'cambios' : 'envios'}`)
+                setModal('')
             } catch (err) {
+                console.log(err)
             }
-
-
-            router.replace(`/Exitoso?uuid=${uuid}&operacion=${object['operacion'] === 'Cambio' ? 'cambios' : 'envios'}`)
-            setModal('')
         }
-        function callback2(object) {
+
+        function callback(object) {
+            const obj = {
+                "remitente": object['remitente'],
+                "importe": object['importe'],
+                "user uuid": object['user uuid'],
+                "uuid": object.uuid,
+                "operacion": object['operacion'],
+                "fecha":object.fecha
+            }
             destinatario.operacion === 'Cambio'
-                ? uploadStorage(`cambios/${uuid}`, postImage, { "remitente": object['remitente'],
-                    "importe": object['importe'],
-                    "user uuid": object['user uuid'],
-                    "uuid": object.uuid,
-                    "operacion": object['operacion']}, callback)
-                : uploadStorage(`envios/${uuid}`, postImage, { "remitente": object['remitente'],
-                    "importe": object['importe'],
-                    "user uuid": object['user uuid'],
-                    "uuid": object.uuid,
-                    "operacion": object['operacion']}, callback)
+                ? uploadStorage(`cambios/${uuid}`, postImage, obj, callback2)
+                : uploadStorage(`envios/${uuid}`, postImage, obj, callback2)
         }
 
 
         destinatario.operacion === 'Cambio'
-            ? uploadStorage(`cambios/${uuid}`, postImage, {
-                ...db, ...verif, fecha,
-                date,
-                uuid,
-            }, callback2)
-            : uploadStorage(`envios/${uuid}`, postImage, {
-                ...db, ...verif, fecha,
-                date,
-                uuid,
-            }, callback2)
+            ? uploadStorage(`cambios/${uuid}`, postImage, { ...db, fecha, date, uuid, estado: 'En verificación', verificacion: false }, callback)
+            : uploadStorage(`envios/${uuid}`, postImage, { ...db, fecha, date, uuid, estado: 'En verificación', verificacion: false }, callback)
     }
 
 
-    console.log(userDB)
+    // console.log(userDB)
 
 
 
@@ -213,9 +191,9 @@ function Home() {
 
     return (
         countries[userDB.cca3] !== undefined && countries[userDB.cca3].countries !== undefined
-            ? <form className='relative w-full min-h-[80vh] space-y-6 lg:grid lg:grid-cols-2 lg:gap-5 ' onSubmit={(e) => save(e, { estado: 'En verificación', verificacion: false })}>
+            ? <form className='relative w-full min-h-[80vh] space-y-6 lg:grid lg:grid-cols-2 lg:gap-5 ' onSubmit={(e) => save(e)}>
                 {modal === 'Validando...' && <Loader> {modal} </Loader>}
-                {modal === 'Verificando...' && <Loader> Enviando a verificación... </Loader>}
+                {modal.length > 5 && <Loader>{modal}</Loader>}
 
                 <div className='w-full  col-span-2'>
                     <h3 className=' pb-3 text-white border-gray-100 border-b-[2px] text-right'>Datos Bancarios De Transacción</h3>
@@ -229,9 +207,9 @@ function Home() {
                 </div>
                 {destinatario !== undefined && destinatario['pais cuenta bancaria'] !== undefined && <div className=' space-y-5'>
                     <Label htmlFor="">Nombre de mi banco</Label>
-                    <SelectBank name="nombre de banco" propHandlerIsSelect={handlerIsSelect5} propIsSelect={isSelect5} operation="envio" click={handlerBankSelect2} arr={Object.values(countries[destinatario.cca3].countries)} />
+                    <SelectBank name="nombre de banco" propHandlerIsSelect={handlerIsSelect5} propIsSelect={isSelect5} operation="envio" click={handlerBankSelect2} arr={countries[destinatario.cca3].countries !== undefined ? Object.values(countries[destinatario.cca3].countries) : []} />
                 </div>}
-                <div className=' space-y-5'>
+                <div className=' space-y-5 max-w-[380px]'>
                     <Label htmlFor="">Numero de mi cuenta bancaria</Label>
                     <Input type="text" name="cuenta bancaria" onChange={onChangeHandler} required />
                 </div>
@@ -241,7 +219,7 @@ function Home() {
                 </div>
                     <div className=' space-y-5'>
                         <Label htmlFor="">Elige una banco para deposito QR</Label>
-                        <SelectBank name="nombre de banco" propHandlerIsSelect={handlerIsSelect4} propIsSelect={isSelect4} operation="envio" click={handlerBankSelect} arr={Object.values(countries[destinatario.cca3].countries)} />
+                        <SelectBank name="nombre de banco" propHandlerIsSelect={handlerIsSelect4} propIsSelect={isSelect4} operation="envio" click={handlerBankSelect} arr={countries[destinatario.cca3].countries !== undefined ? Object.values(countries[destinatario.cca3].countries) : []} />
                     </div>
                 </>}
                 {/* <div className=' space-y-5'>

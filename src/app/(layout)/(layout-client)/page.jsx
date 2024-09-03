@@ -94,6 +94,10 @@ function Page() {
       window.open('https://api.whatsapp.com/send?phone=+59177455743&text=Hola%20BOTTAK,%20necesito%20hacer%20una%20transacci%C3%B3n...', '_blank')
       return
     }
+    if (user && userDB && userDB.habilitado !== true) {
+      setModal('INFO: No habilitado')
+      return
+    }
     if (user && userDB) {
       userDB.destinatarios && userDB.destinatarios !== undefined && Object.keys(userDB.destinatarios).length > 0
         ? router.push('/Destinatarios?operacion=Envio')
@@ -131,6 +135,7 @@ function Page() {
         de momento todas las Remesas lo estamos llevando a cabo de manera manual, <br />
         contactanos en soporte por favor.
       </ModalInfo>} */}
+
       {modal === 'registrate' && <ModalINFO theme={'Danger'} alert={false} button="Iniciar Sesión" funcion={() => handlerRedirect('/Login')} >Inicia Sesión para continuar con tu transacción</ModalINFO>}
       <NavInit mobile={true} />
       <div className={`flex flex-col justify-center items-center h-[300px] lg:h-auto lg:hidden `}>
@@ -143,6 +148,8 @@ function Page() {
           <Button type="submit" theme={"Primary"}>Iniciar Sesión</Button>
         </div>
       </div>
+
+      {/* FORM TRANSFERENCIA */}
       {modalInfo === false
         ? <form className='lg:h-full lg:py-[30px] w-full h-[370px] flex flex-col justify-between items-center  ' onSubmit={handlerTransfer}>
           <NavInit mobile={false} />
@@ -161,11 +168,6 @@ function Page() {
               <span className='text-white text-[14px] font-light'>Comisiones</span>
               <span className='text-white text-[14px] font-light'>
                 {comision} {select}
-                {/* {(divisas && divisas[select] && divisas[select2] && (transferencia * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) <= 1000 && (divisas[select]['tarifa 1'] * transferencia /100).toFixed(2) + ' ' + select}
-                {(divisas && divisas[select] && divisas[select2] && (transferencia * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) <= 10000 && (divisas && divisas[select] && divisas[select2] && (transferencia * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) > 1000 && (divisas[select]['tarifa 2']* transferencia /100).toFixed(2) + ' ' + select}
-                {(divisas && divisas[select] && divisas[select2] && (transferencia * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) <= 100000 && (divisas && divisas[select] && divisas[select2] && (transferencia * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) > 10000 && (divisas[select]['tarifa 3']* transferencia /100).toFixed(2) + ' ' + select}
-                {(divisas && divisas[select] && divisas[select2] && (transferencia * divisas['USDT'].compra / divisas[select].venta).toFixed(2)) > 100000 && 'CONTACTESE CON SOPORTE'}
-               */}
               </span>
             </div>
             <br />
