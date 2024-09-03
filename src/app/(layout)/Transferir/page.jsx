@@ -85,13 +85,13 @@ function Home() {
 
             try {
                 setModal(`Enviando los resultados de la VERIFICACION RAPIDA a \n ${user.email}`)
-                await fetch(`/api/sendEmail`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ data: botChat, estado: db.estado, email: user.email })
-                })
+                // await fetch(`/api/sendEmail`, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({ data: botChat, estado: db.estado, email: user.email })
+                // })
                 fetch('/api/postGoogleSheet', {
                     method: 'POST',
                     headers: {
